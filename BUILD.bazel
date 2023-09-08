@@ -1,0 +1,21 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "boost.histogram",
+    hdrs = glob([
+        "include/**/*.hpp",
+        "include/**/*.h",
+    ]),
+    includes = ["include"],
+    deps = [
+        "@boost.config",
+        "@boost.core",
+        "@boost.math",
+        "@boost.mp11",
+        "@boost.serialization",
+        "@boost.throw_exception",
+        "@boost.variant2",
+    ],
+)
