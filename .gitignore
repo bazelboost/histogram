@@ -13,3 +13,11 @@ tools/codecov
 coverage-report
 .cache
 venv
+
+# Bazel
+!BUILD.bazel
+/bazel-*
+/external
+/.cache
+/compile_commands.json
+user.bazelrc
