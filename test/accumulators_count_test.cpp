@@ -7,8 +7,8 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/histogram/accumulators/count.hpp>
 #include <boost/histogram/accumulators/ostream.hpp>
+#include "str.hpp"
 #include "throw_exception.hpp"
-#include "utility_str.hpp"
 
 using namespace boost::histogram;
 using namespace std::literals;
@@ -20,7 +20,7 @@ void run_tests() {
   {
     c_t c;
     ++c;
-    BOOST_TEST_EQ(c.value(), 1);
+    BOOST_TEST_EQ(c.value(), static_cast<T>(1));
     BOOST_TEST_EQ(str(c), "1"s);
     BOOST_TEST_EQ(str(c, 2, false), " 1"s);
     BOOST_TEST_EQ(str(c, 2, true), "1 "s);

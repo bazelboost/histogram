@@ -7,21 +7,21 @@
 #include <algorithm>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
+#include <boost/core/make_span.hpp>
 #include <boost/histogram/accumulators/weighted_sum.hpp>
 #include <boost/histogram/axis/integer.hpp>
 #include <boost/histogram/detail/common_type.hpp>
 #include <boost/histogram/detail/counting_streambuf.hpp>
 #include <boost/histogram/detail/index_translator.hpp>
 #include <boost/histogram/detail/nonmember_container_access.hpp>
-#include <boost/histogram/detail/span.hpp>
-#include <boost/histogram/detail/sub_array.hpp>
+#include <boost/histogram/detail/static_vector.hpp>
 #include <boost/histogram/fwd.hpp>
 #include <boost/histogram/literals.hpp>
 #include <boost/histogram/storage_adaptor.hpp>
 #include <boost/histogram/unlimited_storage.hpp>
 #include <iostream>
 #include <ostream>
-#include "std_ostream.hpp"
+#include "ostream.hpp"
 #include "throw_exception.hpp"
 
 namespace boost {
@@ -126,17 +126,17 @@ int main() {
     BOOST_TEST_EQ(count, 6);
   }
 
-  // sub_array and span
+  // static_vector and make_span
   {
-    dtl::sub_array<int, 2> a(2, 1);
+    dtl::static_vector<int, 2> a(2, 1);
     a[1] = 2;
-    auto sp = dtl::span<int>(a);
+    auto sp = boost::make_span(a);
     BOOST_TEST_EQ(sp.size(), 2);
     BOOST_TEST_EQ(sp.front(), 1);
     BOOST_TEST_EQ(sp.back(), 2);
 
     const auto& ca = a;
-    auto csp = dtl::span<const int>(ca);
+    auto csp = boost::make_span(ca);
     BOOST_TEST_EQ(csp.size(), 2);
     BOOST_TEST_EQ(csp.front(), 1);
     BOOST_TEST_EQ(csp.back(), 2);

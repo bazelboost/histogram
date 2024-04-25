@@ -12,9 +12,9 @@
 #include <boost/histogram/ostream.hpp>
 #include <string>
 #include <utility>
-#include "std_ostream.hpp"
+#include "histogram.hpp"
+#include "ostream.hpp"
 #include "throw_exception.hpp"
-#include "utility_histogram.hpp"
 
 using namespace boost::histogram;
 

@@ -10,10 +10,10 @@
 #include <limits>
 #include <sstream>
 #include <type_traits>
-#include "std_ostream.hpp"
+#include "axis.hpp"
+#include "ostream.hpp"
+#include "str.hpp"
 #include "throw_exception.hpp"
-#include "utility_axis.hpp"
-#include "utility_str.hpp"
 
 int main() {
   using namespace boost::histogram;

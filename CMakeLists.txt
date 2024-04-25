@@ -2,8 +2,8 @@
 # Distributed under the Boost Software License, Version 1.0.
 # See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
 
-# We support CMake 3.5, but prefer 3.16 policies and behavior
-cmake_minimum_required(VERSION 3.5...3.16)
+# We support CMake 3.12, but prefer 3.27 policies and behavior
+cmake_minimum_required(VERSION 3.12...3.27)
 
 project(boost_histogram VERSION "${BOOST_SUPERPROJECT_VERSION}" LANGUAGES CXX)
 
@@ -11,7 +11,7 @@ add_library(boost_histogram INTERFACE)
 add_library(Boost::histogram ALIAS boost_histogram)
 
 target_include_directories(boost_histogram INTERFACE include)
-target_compile_features(boost_histogram INTERFACE cxx_std_14)
+
 target_link_libraries(boost_histogram
   INTERFACE
     Boost::config
@@ -19,7 +19,10 @@ target_link_libraries(boost_histogram
     Boost::mp11
     Boost::throw_exception
     Boost::variant2
+    Boost::math
 )
+
+target_compile_features(boost_histogram INTERFACE cxx_std_14)
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   # Standalone build, fetch dependencies
@@ -59,6 +62,9 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     boost_fetch(boostorg/variant2 TAG develop EXCLUDE_FROM_ALL)
 
     boost_fetch(boostorg/assert TAG develop EXCLUDE_FROM_ALL) # needed by core
+
+    # this takes forever :(
+    boost_fetch(boostorg/math TAG develop EXCLUDE_FROM_ALL) # needed by some tests
 
     ## skipping serialization, range, accumulators, units;
     ## the tests pull in too many dependencies

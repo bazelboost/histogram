@@ -14,11 +14,15 @@ env:
   B2_OPTS: -q -j2 warnings-as-errors=on
   GCC_VERSION: 11
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   cov:
-    runs-on: macos-10.15
+    runs-on: macos-11
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Fetch Boost superproject
       run: |
         cd ..
@@ -28,13 +32,6 @@ jobs:
         git submodule update --init --depth 5 tools/build tools/boostdep
         python tools/boostdep/depinst/depinst.py --git_args "--depth 5 --jobs 3" histogram
         mv -f * $GITHUB_WORKSPACE
-
-        # # use hdembinski/serialization due to frequent errors in boostorg/serialization
-        # pushd libs/serialization
-        # git remote add patch https://github.com/HDembinski/serialization.git
-        # git fetch patch
-        # git checkout patch/boost_histogram
-        # popd
 
     - name: Prepare b2
       run: |
